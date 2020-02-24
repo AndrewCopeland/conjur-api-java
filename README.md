@@ -112,14 +112,14 @@ Variables variables = conjur.getVariables();
 for (Variable variable : variables.asList()) {
     String value = conjur.retrieveSecret(variable);
     System.out.println(
-        String.format("%s secret value is $s", variable.getId(), value)
+        String.format("%s secret value is %s", variable.getId(), value)
     );
 }
 
 // retrieve all secrets in batch
 variables = conjur.retrieveBatchSecrets(variables);
 for (Variable variable : variables.asList()) {
-    System.out.println("%s secret value is $s", variable.getId(), variable.getSecret());
+    System.out.println("%s secret value is %s", variable.getId(), variable.getSecret());
 }
 
 ```
