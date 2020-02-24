@@ -153,7 +153,7 @@ public class ConjurTest {
     @Test
     public void testConjurGetAllVariablesAndRetrieveAllVariables() {
         Conjur conjur = new Conjur(getConfig());
-
+        
         // Get all variables
         Variables variables = conjur.getVariables();
 

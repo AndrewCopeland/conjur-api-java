@@ -1,5 +1,4 @@
 package net.conjur.api;
-import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 
 import com.google.gson.JsonArray;

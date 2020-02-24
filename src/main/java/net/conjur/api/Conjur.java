@@ -1,20 +1,13 @@
 package net.conjur.api;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import com.google.gson.JsonArray;
-
 import net.conjur.api.clients.ResourceClient;
 
 /**
  * Entry point for the Conjur API client.
  */
 public class Conjur {
-
-    private Variables variables;
-    private Resources resources;
     private ResourceClient resourceClient;
 
     /**
@@ -25,8 +18,6 @@ public class Conjur {
     }
 
     public Conjur(Config config) {
-        this.variables = new Variables();
-        this.resources = new Resources();
         this.resourceClient = new ResourceClient(config, Endpoints.fromConfig(config));
     }
 
@@ -53,7 +44,17 @@ public class Conjur {
      * @return all variables 
      */
     public Variables getVariables() {
-        return Variables.fromResources(getResources(ResourceKind.VARIABLE, null));
+        return getVariables(null);
+    }
+
+    /**
+     * Get all variables authenticated host has access to and
+     * contains the search substring
+     * @param search variable contains a substring(s) comma seperate substrings
+     * @return all variables containing the search substring
+     */
+    public Variables getVariables(String search) {
+        return Variables.fromResources(getResources(ResourceKind.VARIABLE, search));
     }
     
     /**
