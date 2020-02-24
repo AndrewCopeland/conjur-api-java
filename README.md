@@ -55,12 +55,6 @@ If generating a JAR is preferred, you can build the library locally and add the 
 4. Follow the steps outlined [here](https://www.jetbrains.com/help/idea/library.html) for information on how to add JAR files into the new app's project files using Intellij and [here](https://help.eclipse.org/kepler/index.jsp?topic=%2Forg.eclipse.wst.webtools.doc.user%2Ftopics%2Ftwplib.html) for Eclipse
 
 ## Configuration
-Once the setup steps have been successfully run, we will now define the environment variables needed to make the connection between the new app and Conjur. The best way to do so is by setting environment variables. 
-In Conjur (both OSS and DAP), environment variables are mapped to configuration variables by prepending `CONJUR_` to the all-caps name of the
-configuration variable. For example, `appliance_url` is `CONJUR_APPLIANCE_URL`, `account` is `CONJUR_ACCOUNT` etc.  
-
-_NOTE:_ For ways to set credentials (for `CONJUR_AUTHN_LOGIN` and `CONJUR_AUTHN_API_KEY` environment variables ONLY) in the app instead of environment variables, see the [Authorization Examples](#authorization-examples) section below.
-
 The following environment variables need to be included in the apps runtime environment in order use the Conjur API:
 ```bash
 # The conjur appliance url.
