@@ -1,26 +1,27 @@
 - !policy
   id: test
   body:
-    - !variable
-      id: testVariable
+    # Create secrets
+    - &secrets
+      - !variable testVariable
+      - !variable secret1
+      - !variable secret2
 
-    - !user
-      id: alice
-
+    # create secret consumers
+    - !user alice
     - !host myapp
 
+    # add secret consumers to secrets-users group
     - !group secrets-users
-
     - !grant
       role: !group secrets-users
-      member: !user alice
+      members: 
+      - !user alice
+      - !host myapp
 
-    - !grant
-      role: !group secrets-users
-      member: !host myapp
-
+    # permit secret-users group to read and update secrets
     - !permit
-      resource: !variable testVariable
+      resource: *secrets
       privileges: [ read, execute, update]
       roles: !group secrets-users
 
