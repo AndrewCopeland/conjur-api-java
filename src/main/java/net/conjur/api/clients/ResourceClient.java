@@ -67,6 +67,7 @@ public class ResourceClient implements ResourceProvider {
             queryValue += variableResource.getFullId() + ",";
         }
         Response response = batchSecrets.queryParam("variable_ids", queryValue).request().get(Response.class);
+        validateResponse(response);
         String jsonBody = response.readEntity(String.class);
         return new Gson().fromJson(jsonBody, HashMap.class);
     }
