@@ -1,6 +1,6 @@
 Conjur API for Java
 ===================
-]This Java SDK allows developers to build new apps in Java that communicate with Conjur by invoking our Conjur API to perform operations on stored data (add, retrieve, etc).
+This Java SDK allows developers to build new apps in Java that communicate with Conjur by invoking our Conjur API to perform operations on stored data (add, retrieve, etc).
 
 ## Table of Contents
 - [Prequisites](#prerequisites)
