@@ -3,6 +3,7 @@
 /.classpath
 /.project
 /.vscode
+/.DS_Store
 
 # Don't check in binaries
 *.class
@@ -23,4 +24,7 @@
 
 # More IntelliJ trash
 src/main/main.iml
+
+# used in unit test
+token_file.tmp
 
