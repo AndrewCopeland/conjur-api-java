@@ -98,7 +98,7 @@ public class Resources {
      */
     public Resource get(ResourceKind kind, String id) {
         for(Resource resource : resources) {
-            if(resource.getKind() == kind && resource.getId() == id) {
+            if(resource.getKind().equals(kind) && resource.getId().equals(id)) {
                 return resource;
             }
         }
