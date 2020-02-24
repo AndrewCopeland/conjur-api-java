@@ -1,7 +1,6 @@
 package net.conjur.api;
 
 import net.conjur.util.Args;
-import net.conjur.util.Properties;
 
 import java.io.Serializable;
 import java.net.URI;
@@ -10,44 +9,44 @@ import java.net.URI;
  * An <code>Endpoints</code> instance provides endpoint URIs for the various conjur services.
  */
 public class Endpoints implements Serializable {
-    private static final String URL_PROPERTY_NAME = "CONJUR_APPLIANCE_URL";
-    private static final String ACCOUNT_PROPERTY_NAME = "CONJUR_ACCOUNT";
-    private static final String AUTHN_URL_PROPERTY_NAME = "CONJUR_AUTHN_URL";
-
     private final URI authnUri;
     private final URI secretsUri;
+    private final URI resourcesUri;
+    private final URI batchSecretsUri;
 
-    public Endpoints(final URI authnUri, final URI secretsUri){
+    public Endpoints(final URI authnUri, final URI secretsUri, final URI resourcesUri, final URI batchSecretsUri){
         this.authnUri = Args.notNull(authnUri, "authnUri");
         this.secretsUri = Args.notNull(secretsUri, "secretsUri");
+        this.resourcesUri = Args.notNull(resourcesUri, "resourcesUri");
+        this.batchSecretsUri = Args.notNull(batchSecretsUri, "batchSecretsUri");
     }
 
-    public Endpoints(String authnUri, String secretsUri){
-        this(URI.create(authnUri), URI.create(secretsUri));
+    public Endpoints(String authnUri, String secretsUri, String resourcesUri, String batchSecretsUri){
+        this(URI.create(authnUri), URI.create(secretsUri), URI.create(resourcesUri), URI.create(batchSecretsUri));
     }
 
-    public URI getAuthnUri(){ return authnUri; }
+    public URI getAuthnUri(){ 
+        return authnUri; 
+    }
 
     public URI getSecretsUri() {
         return secretsUri;
     }
 
-    public static Endpoints fromSystemProperties(){
-        String account = Properties.getMandatoryProperty(ACCOUNT_PROPERTY_NAME);
-        String applianceUrl = Properties.getMandatoryProperty(URL_PROPERTY_NAME);
-        String authnUrl = Properties.getMandatoryProperty(AUTHN_URL_PROPERTY_NAME, applianceUrl + "/authn");
-
-        return new Endpoints(
-                getAuthnServiceUri(authnUrl, account),
-                getServiceUri("secrets", account, "variable")
-        );
+    public URI getBatchSecretsUri() {
+        return batchSecretsUri;
     }
 
-    public static Endpoints fromCredentials(Credentials credentials){
-        String account = Properties.getMandatoryProperty(ACCOUNT_PROPERTY_NAME);
+    public URI getResourcesUri() {
+        return resourcesUri;
+    }
+
+    public static Endpoints fromConfig(Config config){
         return new Endpoints(
-                getAuthnServiceUri(credentials.getAuthnUrl(), account),
-                getServiceUri("secrets", account, "variable")
+                getAuthnServiceUri(config.getCredentials().getAuthnUrl(), config.getAccount()),
+                getServiceUri(config.getApplianceUrl(), "secrets", config.getAccount(), "variable"),
+                getServiceUri(config.getApplianceUrl(), "resources", config.getAccount()),
+                URI.create(config.getApplianceUrl() + "/secrets")
         );
     }
 
@@ -55,8 +54,12 @@ public class Endpoints implements Serializable {
         return URI.create(String.format("%s/%s", authnUrl, accountName));
     }
 
-    private static URI getServiceUri(String service, String accountName, String path){
-        return URI.create(String.format("%s/%s/%s/%s", Properties.getMandatoryProperty(URL_PROPERTY_NAME), service, accountName, path));
+    private static URI getServiceUri(String applianceUrl, String service, String accountName){
+        return URI.create(String.format("%s/%s/%s/%s", applianceUrl, service, accountName, ""));
+    }
+
+    private static URI getServiceUri(String applianceUrl, String service, String accountName, String path){
+        return URI.create(String.format("%s/%s/%s/%s", applianceUrl, service, accountName, path));
     }
 
     @Override

@@ -2,6 +2,7 @@
 /.settings
 /.classpath
 /.project
+/.vscode
 
 # Don't check in binaries
 *.class
