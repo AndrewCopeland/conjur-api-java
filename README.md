@@ -118,7 +118,7 @@ for (Variable variable : variables.asList()) {
 
 // retrieve all secrets in batch
 variables = conjur.retrieveBatchSecrets(variables)
-for (Variable variable : variables) {
+for (Variable variable : variables.asList()) {
     System.out.println("%s secret value is $s", variable.getId(), variable.getSecret());
 }
 
