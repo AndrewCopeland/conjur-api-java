@@ -94,7 +94,11 @@ public class Conjur {
     public Variables retrieveBatchSecrets(Variables variables) {
         HashMap<String, String> secrets = resourceClient.retrieveBatchSecrets(variables);
         for (Map.Entry<String,String> secret : secrets.entrySet()) {
-            Variable variable = variables.get(secret.getKey());
+            String variableId = secret.getKey().split(":", 3)[2];
+            Variable variable = variables.get(variableId);
+            if (variable == null) {
+                throw new IllegalArgumentException("Variable should never be null. " + variableId);
+            }
             variable.setSecret(secret.getValue());
         }
         return variables;
