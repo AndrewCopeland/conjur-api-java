@@ -28,13 +28,13 @@ public class Variables extends Resources {
      * @return The resources in an array list
      */
     public List<Variable> asList() {
-        return variables.subList(0, variables.size()-1);
+        return variables.subList(0, variables.size());
     }
 
 	@Override
-	public Variable get(String fullId) {
+	public Variable get(String id) {
 		// This seems weird, I feel like I could do it another way
 		// but the get method is returning Resources type
-		return (Variable)super.get(fullId);
+		return (Variable)super.get(ResourceKind.VARIABLE, id);
 	}
 }
