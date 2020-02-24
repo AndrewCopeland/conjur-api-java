@@ -106,7 +106,7 @@ Conjur conjur = new Conjur();
 Conjur conjur = new Conjur();
 
 // Get a list of all the variables I have read access to
-Variables variables = conjur.getVariables()
+Variables variables = conjur.getVariables();
 
 // retrieve each secret from conjur variable, one by one
 for (Variable variable : variables.asList()) {
@@ -117,7 +117,7 @@ for (Variable variable : variables.asList()) {
 }
 
 // retrieve all secrets in batch
-variables = conjur.retrieveBatchSecrets(variables)
+variables = conjur.retrieveBatchSecrets(variables);
 for (Variable variable : variables.asList()) {
     System.out.println("%s secret value is $s", variable.getId(), variable.getSecret());
 }
