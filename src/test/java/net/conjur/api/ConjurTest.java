@@ -36,7 +36,7 @@ public class ConjurTest {
     private static final String APPLIANCE_URL = "http://conjur:3000";
 	private static final String ACCOUNT = "cucumber";
 	private static final String USERNAME = "admin";
-    private static final String PASSWORD = "2c95ynq1xx9afyg2jkpq35pmy9z1pwfej71dfabkb3k6j5eq3k8zvtb";
+    private static final String PASSWORD = "bm4emx35jhja2h0k2wg1v3e5rx3xgq5zc38nparz2sx3kn81xwftsj";
     
     public ConjurTest() {
     }
@@ -147,7 +147,7 @@ public class ConjurTest {
         Conjur conjur = new Conjur(getConfig());
         Resources resources = conjur.getResources(null, "test");
 
-        Assert.assertEquals(5, resources.getLength());
+        Assert.assertEquals(7, resources.getLength());
     }
 
     @Test
@@ -156,18 +156,27 @@ public class ConjurTest {
 
         // Get all variables
         Variables variables = conjur.getVariables();
-        variables = conjur.retrieveBatchSecrets(variables);
 
-        // print out all retrieved secret values
+        // make sure to populate the variables with values
         for(Variable variable : variables.asList()) {
-            String value = variable.getSecret();
-            System.out.println(value);
+            if (variable.getId().equals("test/secret1")) {
+                conjur.addSecret(variable, "testSecret1");
+            }
+            if (variable.getId().equals("test/secret2")) {
+                conjur.addSecret(variable, "testSecret2");
+            } 
+            if (variable.getId().equals("test/testVariable")) {
+                conjur.addSecret(variable, "testSecret");
+            }
         }
 
+        // retrieve these values
+        variables = conjur.retrieveBatchSecrets(variables);
+
         // get each secret explicitly
-        String testVariable = variables.get("cucumber:variable:test/testVariable").getSecret();
-        String secret1 = variables.get("cucumber:variable:secret1").getSecret();
-        String secret2 = variables.get("cucumber:variable:secret2").getSecret();
+        String testVariable = variables.get("test/testVariable").getSecret();
+        String secret1 = variables.get("test/secret1").getSecret();
+        String secret2 = variables.get("test/secret2").getSecret();
 
         Assert.assertEquals("testSecret", testVariable);
         Assert.assertEquals("testSecret1", secret1);
