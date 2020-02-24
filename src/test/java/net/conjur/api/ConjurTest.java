@@ -9,14 +9,6 @@ import net.conjur.util.Properties;
 
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.WebApplicationException;
-import javax.xml.bind.annotation.XmlTransient;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
-
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -44,7 +36,7 @@ public class ConjurTest {
     private static final String APPLIANCE_URL = "http://conjur:3000";
 	private static final String ACCOUNT = "cucumber";
 	private static final String USERNAME = "admin";
-    private static final String PASSWORD = "3jske9f3rg1sp7xh5p862fxcejj2jr9gw22pjvngr3gcg5cy1xwj69e";
+    private static final String PASSWORD = "2c95ynq1xx9afyg2jkpq35pmy9z1pwfej71dfabkb3k6j5eq3k8zvtb";
     
     public ConjurTest() {
     }
