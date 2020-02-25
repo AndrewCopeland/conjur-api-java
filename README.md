@@ -65,11 +65,15 @@ CONJUR_ACCOUNT=myorg
 CONJUR_AUTHN_LOGIN=host/java/app1
 # The api key associated with this application
 CONJUR_AUTHN_API_KEY=eyJhbGciOiJjb25qdXIub3JnL3Nsb3NpbG8vdjIiLCJraWQiOiJhNGU5ND
+```
 
-# If using a non-generic authentication type
+If using a non-generic authentication type
+```bash
 CONJUR_AUTHN_URL=https://conjur-master/authn-iam/prod
+```
 
-# If using authn-k8s or other type of authentication where session token is provided
+If using authn-k8s or other type of authentication where session token is provided
+```bash
 CONJUR_AUTHN_TOKEN_FILE=/etc/conjur/session/token
 or
 CONJUR_AUTHN_TOKEN='{"protected": "..", "payload": "...", "signature": "..."}'
