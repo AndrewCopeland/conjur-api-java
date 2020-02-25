@@ -2,15 +2,6 @@ Conjur API for Java
 ===================
 This Java SDK allows developers to build new apps in Java that communicate with Conjur by invoking our Conjur API to perform operations on stored data (add, retrieve, etc).
 
-## Table of Contents
-- [Summary](#summary)
-- [Setup](#setup)
-- [Configuration](#configuration)
-- [Setup Trust Between App and Conjur](#setup-trust-between-app-and-conjur)
-- [JAX-RS Implementations](#jax-rs-implementations)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## Summary
 The java application created with this library should be able to communicate to the Conjur appliance using HTTPS. Set environment variables to configure the conjur client. Below is how to configure the Conjur client depending on the applications authentication type:
 - [api key authentication](#api-key)
