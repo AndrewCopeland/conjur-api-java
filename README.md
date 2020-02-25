@@ -87,7 +87,7 @@ CONJUR_AUTHN_TOKEN='{"protected": "..", "payload": "...", "signature": "..."}'
 export CONJUR_APPLIANCE_URL=https://conjur-master.local
 export CONJUR_ACCOUNT=myOrg
 export CONJUR_AUTHN_LOGIN=host/app1
-export CONJUR_AUTHN_API_KEYajd87agddkisoi72bsks82nbdr2
+export CONJUR_AUTHN_API_KEY=ajd87agddkisoi72bsks82nbdr2
 ```
 ```java
 Conjur conjur = new Conjur();
@@ -95,19 +95,38 @@ Conjur conjur = new Conjur();
 
 ### authn-iam
 ```sh
-# Additionally set the following environment variables:
+# CONJUR_AUTHN_URL must be provided for authn-iam
 export CONJUR_APPLIANCE_URL=https://conjur-master.local
+export CONJUR_AUTHN_URL=https://conjur-master.local/authn-iam/prod
 export CONJUR_ACCOUNT=myOrg
-export CONJUR_AUTHN_LOGIN=host/app1
-export CONJUR_AUTHN_API_KEYajd87agddkisoi72bsks82nbdr2
+# CONJUR_AUTHN_LOGIN must end with the format <AWS account number>/<AWS IAM role name>
+export CONJUR_AUTHN_LOGIN=host/team1/2728383626382/iam-role-name-example
+export CONJUR_AUTHN_API_KEY=fillerApiKey
+
+# these environment variables are set automatically for lambda functions
+# to set these in EC2 you must call the metadata endpoint
+export AWS_ACCESS_KEY=32423423ed2d234
+export AWS_SECRET_KEY=sdfsdf8s9sfhf9s9s8hdf
+export AWS_SESSION_TOKEN=8u98shd9f98sdhfsdf/sd8fhs9d8fhsdf/98hs9duhf9sdhf9sgdfsd9fugsd9ugs9df
 ```
 ```java
-Conjur conjur = new Conjur();
+// construct the api key used when using authn-iam
+String awsAccessKey = System.getenv("AWS_ACCESS_KEY");
+String awsSecretKey = System.getenv("AWS_SECRET_KEY");
+String awsToken = System.getenv("AWS_SESSION_TOKEN");
+String awsConjurApiKey = ConjurUtilities.getIamApiKey(awsAccessKey, awsSecretKey, awsToken);
+
+// get configuration object using environment variables
+Config config = new Config.fromEnvironment();
+// override the api key with the constructed conjur aws api key
+config.setPassword(awsConjurApiKey);
+Conjur conjur = new Conjur(config);
 ```
 
 ### authn-k8s
 ```sh
-# Additionally set the following environment variables:
+# username and password is not required for authn-k8s 
+# when using the side car authenticator
 export CONJUR_APPLIANCE_URL=https://conjur-master.local
 export CONJUR_ACCOUNT=myOrg
 export CONJUR_AUTHN_TOKEN_FILE=path/to/conjur/authentication/token.json
