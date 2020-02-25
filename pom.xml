@@ -78,10 +78,11 @@
             <version>1.4.0</version>
             <type>maven-plugin</type>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
-            <groupId>info.cukes</groupId>
-            <artifactId>cucumber-junit</artifactId>
-            <version>1.1.5</version>
+            <groupId>com.github.stefanbirkner</groupId>
+            <artifactId>system-rules</artifactId>
+            <version>1.16.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -118,12 +119,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.20</version>
                 <configuration>
-                    <systemPropertyVariables>
-                        <CONJUR_ACCOUNT>${env.CONJUR_ACCOUNT}</CONJUR_ACCOUNT>
-                        <CONJUR_APPLIANCE_URL>${env.CONJUR_APPLIANCE_URL}</CONJUR_APPLIANCE_URL>
-                        <CONJUR_AUTHN_LOGIN>${env.CONJUR_AUTHN_LOGIN}</CONJUR_AUTHN_LOGIN>
-                        <CONJUR_AUTHN_API_KEY>${env.CONJUR_AUTHN_API_KEY}</CONJUR_AUTHN_API_KEY>
-                    </systemPropertyVariables>
                 </configuration>
             </plugin>
 

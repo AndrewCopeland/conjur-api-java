@@ -1,24 +1,40 @@
 package net.conjur.api;
 
-import net.conjur.api.clients.ResourceClient;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Variables {
+public class Variables extends Resources {	
+	private ArrayList<Variable> variables;
 
-    private ResourceClient resourceClient;
-
-    public Variables(Credentials credentials) {
-        resourceClient = new ResourceClient(credentials, Endpoints.fromCredentials(credentials));
+	public Variables() {
+		super();
     }
 
-    public Variables(Token token) {
-        resourceClient = new ResourceClient(token, Endpoints.fromSystemProperties());
-    }
-    
-    public String retrieveSecret(String variableId) {
-        return resourceClient.retrieveSecret(variableId);
+    public Variables(ArrayList<Variable> variables) {
+		super((ArrayList<Resource>)(Object)variables);
+		this.variables = variables;
+	}
+
+	public static Variables fromResources(Resources resources) {
+		ArrayList<Variable> variables = new ArrayList<Variable>();
+		for (Resource resource : resources.asArrayList()) {
+			variables.add(Variable.fromResource(resource));
+		}
+		return new Variables(variables);
+	}
+
+	/**
+     * Return all variables as an array list
+     * @return The resources in an array list
+     */
+    public List<Variable> asList() {
+        return variables.subList(0, variables.size());
     }
 
-    public void addSecret(String variableId, String secret){
-        resourceClient.addSecret(variableId, secret);
-    }
+	@Override
+	public Variable get(String id) {
+		// This seems weird, I feel like I could do it another way
+		// but the get method is returning Resources type
+		return (Variable)super.get(ResourceKind.VARIABLE, id);
+	}
 }
