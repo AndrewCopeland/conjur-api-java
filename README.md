@@ -93,7 +93,7 @@ export CONJUR_AUTHN_API_KEYajd87agddkisoi72bsks82nbdr2
 Conjur conjur = new Conjur();
 ```
 
-### Authorization Token
+### Authorization Token (authn-k8s)
 ```sh
 # Additionally set the following environment variables:
 export CONJUR_APPLIANCE_URL=https://conjur-master.local
