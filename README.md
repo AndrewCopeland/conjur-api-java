@@ -3,19 +3,19 @@ Conjur API for Java
 This Java SDK allows developers to build new apps in Java that communicate with Conjur by invoking our Conjur API to perform operations on stored data (add, retrieve, etc).
 
 ## Table of Contents
-- [Prequisites](#prerequisites)
+- [Summary](#summary)
 - [Setup](#setup)
 - [Configuration](#configuration)
 - [Setup Trust Between App and Conjur](#setup-trust-between-app-and-conjur)
-- [Authorization Examples](#authorization-examples)
-- [Conjur Services Operation Examples](#conjur-services-operation-examples)
 - [JAX-RS Implementations](#jax-rs-implementations)
 - [Contributing](#contributing)
 - [License](#license)
 
-## Prerequisites
-1. Your java application must be able to communicate to the Conjur appliance using HTTPS.
-2. Have a the needed environment variables mentioned in the Configuration section.
+## Summary
+The java application created with this library should be able to communicate to the Conjur appliance using HTTPS. Set environment variables to configure the conjur client. Below is how to configure the Conjur client depending on the applications authentication type:
+- [api key authentication](#api-key)
+- [authn-iam authentication](#authn-iam)
+- [authn-k8s authentication](#authn-k8s)
 
 ## Setup
 You can grab the library's dependencies from the source by using Maven **or** locally by generating a JAR file and adding it to the project manually. 
@@ -80,8 +80,8 @@ CONJUR_AUTHN_TOKEN='{"protected": "..", "payload": "...", "signature": "..."}'
 ```
 
 
-
-### Environment Variables (the standard way)
+## Authentication types
+### Api Key
 ```sh
 # Additionally set the following environment variables:
 export CONJUR_APPLIANCE_URL=https://conjur-master.local
@@ -93,7 +93,19 @@ export CONJUR_AUTHN_API_KEYajd87agddkisoi72bsks82nbdr2
 Conjur conjur = new Conjur();
 ```
 
-### Authorization Token (authn-k8s)
+### authn-iam
+```sh
+# Additionally set the following environment variables:
+export CONJUR_APPLIANCE_URL=https://conjur-master.local
+export CONJUR_ACCOUNT=myOrg
+export CONJUR_AUTHN_LOGIN=host/app1
+export CONJUR_AUTHN_API_KEYajd87agddkisoi72bsks82nbdr2
+```
+```java
+Conjur conjur = new Conjur();
+```
+
+### authn-k8s
 ```sh
 # Additionally set the following environment variables:
 export CONJUR_APPLIANCE_URL=https://conjur-master.local
