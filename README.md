@@ -17,6 +17,9 @@ The java application created with this library should be able to communicate to 
 - [authn-iam authentication](#authn-iam)
 - [authn-k8s authentication](#authn-k8s)
 
+If the conjur service has been configured with a self-signed certificate then you must add the conjur public certificate to the java certificate keystore.
+- [set self-signed certificate java keystore](#setup-trust-between-app-and-conjur)
+
 ## Setup
 You can grab the library's dependencies from the source by using Maven **or** locally by generating a JAR file and adding it to the project manually. 
  
@@ -137,25 +140,25 @@ Conjur conjur = new Conjur();
 
 ### Usage
 ```java
-// set environment variables as mentioned above
-Conjur conjur = new Conjur();
+ // set environment variables as mentioned above
+ Conjur conjur = new Conjur();
 
-// Get a list of all the variables I have read access to
-Variables variables = conjur.getVariables();
+ // Get a list of all the variables I have read access to
+ Variables variables = conjur.getVariables();
 
-// retrieve each secret from conjur variable, one by one
-for (Variable variable : variables.asList()) {
-    String value = conjur.retrieveSecret(variable);
-    System.out.println(
-        String.format("%s secret value is %s", variable.getId(), value)
-    );
-}
+ // retrieve each secret from conjur variable, one by one
+ for (Variable variable : variables.asList()) {
+ String value = conjur.retrieveSecret(variable);
+ System.out.println(
+         String.format("%s secret value is %s", variable.getId(), value));
+ }
 
-// retrieve all secrets in batch
-variables = conjur.retrieveBatchSecrets(variables);
-for (Variable variable : variables.asList()) {
-    System.out.println("%s secret value is %s", variable.getId(), variable.getSecret());
-}
+ // retrieve all secrets in batch
+ variables = conjur.retrieveBatchSecrets(variables);
+ for (Variable variable : variables.asList()) {
+     System.out.println(
+         String.format("%s secret value is %s", variable.getId(), variable.getSecret()));
+ }
 
 ```
 
