@@ -11,6 +11,9 @@ The java application created with this library should be able to communicate to 
 If the conjur service has been configured with a self-signed certificate then you must add the conjur public certificate to the java certificate keystore.
 - [set self-signed certificate java keystore](#setup-trust-between-app-and-conjur)
 
+An example of retrieving all the secrets the application has access tro can be found here
+- [fetching all secrets from conjur](#usage)
+
 ## Setup
 You can grab the library's dependencies from the source by using Maven **or** locally by generating a JAR file and adding it to the project manually. 
  
