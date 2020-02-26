@@ -143,7 +143,7 @@ Conjur conjur = new Conjur();
  // retrieve each secret from conjur variable, one by one
  for (Variable variable : variables.asList()) {
  String value = conjur.retrieveSecret(variable);
- System.out.println(
+     System.out.println(
          String.format("%s secret value is %s", variable.getId(), value));
  }
 
