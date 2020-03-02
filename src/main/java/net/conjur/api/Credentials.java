@@ -13,6 +13,10 @@ import net.conjur.util.Properties;
  * example for caching.</p>
  */
 public class Credentials {
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
     private String username;
     private String password;
     private String authnUrl;
@@ -22,7 +26,13 @@ public class Credentials {
      * @param password the password or api key for this Conjur identity
      */
     public Credentials(String username, String password) {
+<<<<<<< HEAD
         this(username, password, Properties.getMandatoryProperty(Constants.CONJUR_APPLIANCE_URL_PROPERTY) + "/authn");
+=======
+        this(username, password, 
+           Properties.getMandatoryProperty(Constants.CONJUR_AUTHN_URL_PROPERTY,
+           Properties.getMandatoryProperty(Constants.CONJUR_APPLIANCE_URL_PROPERTY) + "/authn"));
+>>>>>>> upstream/master
     }
 
     /**
@@ -37,6 +47,24 @@ public class Credentials {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Creates a Credentials instance from the system properties
+     * {@link Credentials#CONJUR_AUTHN_LOGIN_PROPERTY} and
+     * {@link Credentials#CONJUR_AUTHN_API_KEY_PROPERTY}
+     * @return the credentials stored in the system property.
+     */
+    public static Credentials fromSystemProperties(){
+        String login = Properties.getMandatoryProperty(Constants.CONJUR_AUTHN_LOGIN_PROPERTY);
+        String apiKey = Properties.getMandatoryProperty(Constants.CONJUR_AUTHN_API_KEY_PROPERTY);
+        String applianceUrl = Properties.getMandatoryProperty(Constants.CONJUR_APPLIANCE_URL_PROPERTY);
+        String authnUrl = Properties.getMandatoryProperty(Constants.CONJUR_AUTHN_URL_PROPERTY, applianceUrl + "/authn");
+
+        return new Credentials(login, apiKey, authnUrl);
+    }
+
+    /**
+>>>>>>> upstream/master
      * @return the username/login for this Conjur identity
      */
     public String getUsername() {
